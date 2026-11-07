@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f3eb" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23316650'/%3E%3Cpath d='M16 5v22M9 12h14' stroke='%23fffaf0' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <title>Reto de Fe — Trivia bíblica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Reto de Fe inicio" onclick="showHome(); return false;">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3v26M7 11h18"/><path class="leaf" d="M16 21c-6-1-9-5-9-10 5 0 9 3 9 10Zm0 3c6-1 9-5 9-10-5 0-9 3-9 10Z"/></svg></span>
+        <span>reto<span class="brand-light">de</span>fe</span>
+      </a>
+      <div class="top-right"><span class="saved-label"><span class="live-dot"></span> Tu momento de fe</span><button class="sound-button" id="soundToggle" aria-label="Activar sonido" title="Activar sonido">♫</button></div>
+    </header>
+
+    <main id="homeScreen" class="screen home-screen">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> APRENDE JUGANDO <span class="eyebrow-line"></span></div>
+          <h1>¿Cuánto sabes<br>de la <em>Biblia?</em></h1>
+          <p class="hero-subtitle">Pon a prueba tus conocimientos y descubre nuevas historias en cada pregunta.</p>
+          <div class="hero-meta"><div class="avatar-stack"><span>✦</span><span>✝</span><span>♡</span></div><span>Una pausa para crecer en fe</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun-halo"></div><div class="spark spark-one">✦</div><div class="spark spark-two">✧</div>
+          <div class="book"><div class="book-page left-page"><span class="book-cross">✝</span><span class="book-lines"></span><span class="book-lines short"></span><span class="book-lines"></span><span class="book-lines medium"></span></div><div class="book-page right-page"><span class="page-title">PALABRA<br>DE VIDA</span><span class="book-lines"></span><span class="book-lines medium"></span><span class="book-lines"></span></div><div class="book-spine"></div></div>
+          <div class="art-caption">“Lámpara es a mis pies<br>tu palabra” <small>— Salmo 119:105</small></div>
+          <div class="tiny-star star-a">✦</div><div class="tiny-star star-b">✦</div>
+        </div>
+      </section>
+
+      <section class="start-panel">
+        <div class="section-heading"><div><span class="section-kicker">ELIGE TU RECORRIDO</span><h2>¿Listo para el reto?</h2></div><div class="round-pill"><span>◷</span> 5 preguntas · 3 min</div></div>
+        <div class="category-grid" role="group" aria-label="Elige una categoría">
+          <button class="category-card active" data-category="all"><span class="category-icon all-icon">✧</span><span class="category-text"><strong>Un poco de todo</strong><small>La Biblia completa</small></span><span class="category-check">✓</span></button>
+          <button class="category-card" data-category="antiguo"><span class="category-icon old-icon">✦</span><span class="category-text"><strong>Antiguo Testamento</strong><small>Historias y profetas</small></span><span class="category-check">✓</span></button>
+          <button class="category-card" data-category="nuevo"><span class="category-icon new-icon">♡</span><span class="category-text"><strong>Nuevo Testamento</strong><small>Jesús y sus discípulos</small></span><span class="category-check">✓</span></button>
+        </div>
+        <div class="start-row"><div class="best-score"><span class="trophy">♕</span><span><small>TU MEJOR PUNTUACIÓN</small><strong id="bestScore">—</strong></span></div><button class="primary-button" id="startButton">Comenzar el reto <span>→</span></button></div>
+      </section>
+      <footer class="home-footer"><span>Hecho para aprender, compartir y crecer.</span><span>CON CARIÑO Y FE <span class="footer-heart">♥</span></span></footer>
+    </main>
+
+    <main id="quizScreen" class="screen quiz-screen hidden" aria-live="polite">
+      <div class="quiz-topline"><button class="back-button" id="quitButton"><span>←</span> Salir</button><div class="quiz-category" id="quizCategory">UN POCO DE TODO</div><div class="score-chip"><span>✦</span> <b id="liveScore">0</b> pts</div></div>
+      <section class="quiz-card">
+        <div class="quiz-progress-line"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="question-meta"><span id="questionCount">PREGUNTA 1 DE 5</span><span class="streak" id="streakLabel">✧ ¡A por ello!</span></div>
+        <div class="question-body"><div class="question-illustration" id="questionIcon">✦</div><h2 id="questionText">Cargando pregunta…</h2><p id="questionHint">Elige la respuesta correcta</p></div>
+        <div class="answers" id="answers"></div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+        <button class="next-button" id="nextButton" disabled>Siguiente pregunta <span>→</span></button>
+      </section>
+      <div class="quiz-verse"><span>“</span><p>Guarda en tu corazón lo que aprendes hoy.</p><span>”</span></div>
+    </main>
+
+    <main id="resultScreen" class="screen result-screen hidden">
+      <section class="result-card">
+        <div class="result-confetti" aria-hidden="true">✦　✧　✦</div>
+        <div class="result-medal" id="resultMedal">✝</div>
+        <span class="section-kicker">RETO COMPLETADO</span>
+        <h1 id="resultTitle">¡Muy bien!</h1>
+        <p id="resultMessage">Cada respuesta es una oportunidad para aprender.</p>
+        <div class="result-score"><strong id="finalScore">0</strong><span>puntos</span><small id="correctCount">0 de 5 correctas</small></div>
+        <div class="result-stats"><div><span>✦</span><strong id="accuracyStat">0%</strong><small>PRECISIÓN</small></div><i></i><div><span>⚡</span><strong id="bestStreak">0</strong><small>MEJOR RACHA</small></div><i></i><div><span>◷</span><strong>~3 min</strong><small>BIEN INVERTIDOS</small></div></div>
+        <button class="primary-button play-again" id="playAgain">Jugar de nuevo <span>↻</span></button>
+        <button class="text-button" id="homeButton">Volver al inicio</button>
+      </section>
+      <footer class="home-footer"><span>“Todo lo puedo en Cristo que me fortalece.” — Filipenses 4:13</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="game.js"></script>
+</body>
+</html>
